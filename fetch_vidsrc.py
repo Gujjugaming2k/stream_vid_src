@@ -32,6 +32,11 @@ def fetch_m3u8_url_from_html(url, language="Hindi"):
     except json.JSONDecodeError:
         return {"status": "error", "message": "Failed to parse JSON data."}
 
+def modify_m3u8_url(original_url):
+    # Modify the URL to append '1080' before '/index.m3u8'
+    modified_url = original_url.replace('/index.m3u8', '/1080/index.m3u8')
+    return modified_url
+
 @app.route('/fetch_m3u8', methods=['GET'])
 def fetch_m3u8():
     url = request.args.get('url')
@@ -54,7 +59,8 @@ def redirect_to_m3u8():
     result = fetch_m3u8_url_from_html(url, language)
     
     if result['status'] == 'success':
-        return redirect(result['m3u8_url'])  # Redirect to the m3u8 URL
+        modified_url = modify_m3u8_url(result['m3u8_url'])
+        return redirect(modified_url)  # Redirect to the modified m3u8 URL
     else:
         return jsonify(result)  # Return the error message as JSON
 
