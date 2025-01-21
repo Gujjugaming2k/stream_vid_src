@@ -12,7 +12,7 @@ def fetch_m3u8_url_from_html(url, language="Hindi"):
         response.raise_for_status()
 
         # Debugging: Log the HTML response (optional)
-        print("HTML Response:", response.text[:500])  # Print the first 500 characters of the HTML
+        #print("HTML Response:", response.text[:500])  # Print the first 500 characters of the HTML
 
         # Extract the `file` array from the `Playerjs` object using regex
         pattern = r'new Playerjs\(\{"id":.*?"file": (\[.*?\])\}\);'
@@ -22,7 +22,7 @@ def fetch_m3u8_url_from_html(url, language="Hindi"):
             extracted_data = match.group(1)
 
             # Debugging: Log the extracted data
-            print("Extracted JSON-like Data:", extracted_data)
+            #print("Extracted JSON-like Data:", extracted_data)
 
             # Clean up the JSON-like data
             cleaned_data = extracted_data.replace("'", '"')  # Replace single quotes with double quotes
@@ -78,4 +78,4 @@ def redirect_to_m3u8():
         return jsonify(result)  # Return the error message as JSON
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5011)
+    app.run(debug=False, port=5011)
